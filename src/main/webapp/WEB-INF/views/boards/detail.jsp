@@ -33,7 +33,6 @@
 </div>
 
 <script>
-
 	$("#btnDelete").click(()=>{
 		deleteById();
 	});
@@ -57,7 +56,6 @@
 		});
 	}
 	
-
 	// 하트 아이콘을 클릭했을때의 로직
 	$("#iconLove").click(()=>{
 		let isLovedState = $("#iconLove").hasClass("fa-solid");
@@ -81,6 +79,8 @@
 				// 좋아요 수 1 증가
 				let count = $("#countLove").text();
 				$("#countLove").text(Number(count)+1);
+				$("#lovesId").val(res.data.id);
+				console.log(res);
 			}else{
 				alert("좋아요 실패했습니다");
 			}
@@ -117,8 +117,6 @@
 		$("#iconLove").removeClass("fa-solid");
 		$("#iconLove").addClass("fa-regular");
 	}
-
 </script>
 
 <%@ include file="../layout/footer.jsp"%>
-

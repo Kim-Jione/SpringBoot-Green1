@@ -21,7 +21,6 @@ GRANT ALL PRIVILEGES ON greendb.* TO 'green'@'%';
 ### 테이블 생성
 ```sql
 USE greendb;
-
 create table users(
     id int primary KEY auto_increment,
     username varchar(20),
@@ -29,7 +28,6 @@ create table users(
     email varchar(50),
     createdAt TIMESTAMP
 );
-
 create table boards(
     id int primary KEY auto_increment,
     title varchar(150),
@@ -37,7 +35,6 @@ create table boards(
     usersId int,
     createdAt TIMESTAMP
 );
-
 create table loves(
     id int primary KEY auto_increment,
     usersId int,
@@ -53,4 +50,23 @@ insert into users(username, password, email, createdAt) values('ssar', '1234', '
 insert into users(username, password, email, createdAt) values('cos', '1234', 'cos@nate.com', NOW());
 insert into users(username, password, email, createdAt) values('hong', '1234', 'hong@nate.com', NOW());
 COMMIT;
+```
+
+### 좋아요 + 상세보기 쿼리
+```sql
+SELECT bo.*,
+lo.id lovesId,
+if(lo.id IS NULL, 0, 1) isLoved,
+(SELECT COUNT(*) FROM loves WHERE boardsId = 3) loveCount
+FROM boards bo
+LEFT OUTER JOIN (SELECT * FROM loves WHERE usersId = 3) lo
+ON bo.id = lo.boardsId
+WHERE bo.id = 3
+SELECT
+b.*,
+(SELECT id FROM loves WHERE usersId = 1 AND boardsId = 3) lovesId,
+(SELECT 1 FROM loves WHERE usersId = 1 AND boardsId = 3) isLoved,
+(SELECT COUNT(*) FROM loves WHERE boardsId = 3) loveCount
+FROM boards b
+WHERE b.id = 3
 ```
