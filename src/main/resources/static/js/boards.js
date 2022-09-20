@@ -40,6 +40,7 @@ function insertLove() {
 		type: "POST",
 		dataType: "json"
 	}).done((res) => {
+		console.log(res);
 		if (res.code == 1) {
 			renderLoves();
 			// 좋아요 수 1 증가
