@@ -62,7 +62,7 @@ public class UsersController {
 		usersService.회원가입(joinDto);
 		return new CMRespDto<>(1, "회원가입성공", null);
 	}
-	
+
 	@PostMapping("/login")
 	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
 		System.out.println("===========");
@@ -89,28 +89,35 @@ public class UsersController {
 		session.setAttribute("principal", principal);
 		return new CMRespDto<>(1, "로그인성공", null);
 	}
+	// --------------------------------------------------- 아직 인증 필요X
 	
-	@GetMapping("/users/{id}")
+	// 인증 필요 - 세션이 있는지 확인해야됨
+	@GetMapping("/s/users/{id}")
 	public String updateForm(@PathVariable Integer id, Model model) {
+		
+		
 		Users usersPS = usersService.회원정보보기(id);
 		model.addAttribute("users", usersPS);
 		return "users/updateForm";
 	}
 	
-	@PutMapping("/users/{id}")
+	// 인증 필요
+	@PutMapping("/s/users/{id}")
 	public @ResponseBody CMRespDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
 		Users usersPS = usersService.회원수정(id, updateDto);
 		session.setAttribute("principal", usersPS); // 세션 동기화
 		return new CMRespDto<>(1, "회원수정 성공", null);
 	}
 	
-	@DeleteMapping("/users/{id}")
+	// 인증 필요
+	@DeleteMapping("/s/users/{id}")
 	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id, HttpServletResponse response) {
 		usersService.회원탈퇴(id);
 		session.invalidate();
 		return new CMRespDto<>(1, "회원탈퇴성공", null);
 	}
 	
+	// 세션 날리는 거여서 신경X
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();

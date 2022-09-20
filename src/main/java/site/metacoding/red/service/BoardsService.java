@@ -3,6 +3,7 @@ package site.metacoding.red.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
@@ -21,17 +22,18 @@ import site.metacoding.red.web.dto.response.boards.PagingDto;
 @Service
 public class BoardsService {
 
-	private final UsersDao usersDao;
+	
 	private final BoardsDao boardsDao;
 	private final LovesDao lovesDao;
-
-	public void 좋아요취소(Integer id) {
-		lovesDao.deleteById(id);
+	
+	
+	public void 좋아요취소(Integer lovesId) { // boardId인지 lovesId인지 헷갈리므로 누구의 Id인지 적어준다
+		lovesDao.deleteById(lovesId); // 혼자만 있으니 트랜잭션을 걸지 않는다
 	}
 	
 	public Loves 좋아요(Loves loves) {
 		lovesDao.insert(loves);
-		return loves;
+		return loves; // id, usesId, boardsId -> PK만 충전되있음, Mybatis 기능
 	}
 	
 	public PagingDto 게시글목록보기(Integer page, String keyword) {
