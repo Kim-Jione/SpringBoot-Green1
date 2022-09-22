@@ -9,7 +9,7 @@ function deleteById() {
 	let page = $("#page").val();
 	let keyword = $("#keyword").val();
 
-	$.ajax("/s/boards/" + id, {
+	$.ajax("/s/api/boards/" + id, {
 		type: "DELETE",
 		dataType: "json" // 응답 데이터
 	}).done((res) => {
@@ -36,7 +36,7 @@ $("#iconLove").click(() => {
 function insertLove() {
 	let id = $("#id").val();
 
-	$.ajax("/s/boards/" + id + "/loves", {
+	$.ajax("/s/api/boards/" + id + "/loves", {
 		type: "POST",
 		dataType: "json"
 	}).done((res) => {
@@ -67,7 +67,7 @@ function deleteLove() {
 	let lovesId = $("#lovesId").val();
 
 
-	$.ajax("/s/boards/" + id + "/loves/" + lovesId, { // 주소가 만들어진다
+	$.ajax("/s/api/boards/" + id + "/loves/" + lovesId, { // 주소가 만들어진다
 		type: "DELETE",
 		dataType: "json" // 응답 받는 데이터 json	
 	}).done((res) => { // json데이터를 자바스크립트 오브젝트로 바꿔준다
@@ -109,7 +109,7 @@ function update() {
 
 	let id = $("#id").val();
 
-	$.ajax("/s/boards/" + id, {
+	$.ajax("/s/api/boards/" + id, {
 		type: "PUT",
 		dataType: "json", // 응답 데이터
 		data: JSON.stringify(data), // http body에 들고갈 요청 데이터
@@ -143,7 +143,7 @@ function save() {
 		content: $("#content").val()
 	};
 
-	$.ajax("/s/boards", {
+	$.ajax("/s/api/boards", {
 		type: "POST",
 		dataType: "json", // 응답 데이터
 		data: JSON.stringify(data), // http body에 들고갈 요청 데이터
