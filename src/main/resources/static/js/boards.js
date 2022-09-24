@@ -152,7 +152,7 @@ function save() {
 		}
 	}).done((res) => {
 		if (res.code == 1) {
-			location.href = "/";
+			location.href = "/"; // 현재 접속중인 페이지 정보를 갖고 있다 "/" 로 이동한다는 말이다
 		}
 	});
 }
